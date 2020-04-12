@@ -53,6 +53,9 @@ const loadNotes = () => {
 const readNote = (title) => {
   const notes = loadNotes();
   const note = notes.find((note) => note.title === title);
+  // debugger;
+  // to run with debugger use inspect : node inspect .\app.js read --title="" or
+  // node --inspect-brk .\app.js read --title="My note 55"
   if (note) {
     return console.log(chalk.green("Your Note is:: =>", note.body));
   } else {
