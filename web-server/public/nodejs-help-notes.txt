@@ -1,0 +1,55 @@
+Node js help notes
+
+====================
+if Nodemon install globally and throwing an error follow the below steps:
+
+It's a security restriction of the Windows PowerShell.
+
+Open up a powershell command window (open it as administrator)
+To check out current restrictions type "Get-ExecutionPolicy"
+Enable powershell by typing "Set-ExecutionPolicy remotesigned"
+Just got the solution from this link:
+https://stackoverflow.com/questions/32692087/nuget-give-this-error-ps1-cannot-be-loaded-because-running-scripts-is-disabled
+
+======================
+
+// debugger;
+// to run with debugger use inspect : node inspect .\app.js read --title="" or
+// node --inspect-brk .\app.js read --title="My note 55"
+
+
+=============
+Setting up SSH keys to github
+
+TO transfer the code from our machine/github to third party app (heroku) in a secure way, we use SSH (Secure shell).
+
+to check if we already have the SSH keys, we need to open the git bash in the project directory(fir windows)
+commond: ls -a -l ~/.ssh
+ls: used for to list out the files in the directory.
+-a: to show the hidden files.
+-l: to show in the list manner.
+~/.ssh: type of file we are searching for.
+
+if we have the SSH keys, will see something like below:
+
+=========
+total 33
+drwxr-xr-x 1 ASUS 197609    0 Jan 13 08:27 ./
+drwxr-xr-x 1 ASUS 197609    0 Apr 19 18:47 ../
+-rw-r--r-- 1 ASUS 197609 1679 Oct 15  2017 github_rsa
+-rw-r--r-- 1 ASUS 197609  402 Oct 15  2017 github_rsa.pub
+-rw-r--r-- 1 ASUS 197609  802 Jan 13 08:28 known_hosts
+==========
+
+where as github_rsa is private key and github_rsa.pub is public key.
+
+or if we don't have the key, we can generate the key by following commonds:
+ssh-keygen -t rsa -b 4096 -C "nagariya23nakul@gmail.com"
+
+ssh-keygen: is the main commond to generate the key.
+-t: is asking for which type of key we want in out case its 'rsa'.
+-b: means how many bits key we want, in our case its 4096.
+-C: is for comment in which we can give our mail id.
+
+
+

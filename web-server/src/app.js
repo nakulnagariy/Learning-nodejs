@@ -1,7 +1,8 @@
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
-
+const geocode = require("./utils/geocode");
+const forecast = require("./utils/forecast");
 const app = express();
 
 // Define path for express config
@@ -19,7 +20,7 @@ app.use(express.static(publicDirectoryPath));
 
 app.get("", (req, res) => {
   res.render("index", {
-    title: "Home Page",
+    title: "Weather",
     author: "Nakul Nagariya",
     name: "Nakul Nagariya",
   });
@@ -27,7 +28,7 @@ app.get("", (req, res) => {
 
 app.get("/about", (req, res) => {
   res.render("about", {
-    title: "About Page",
+    title: "About",
     src: "/img/DSC_0328.JPG",
     name: "Nakul Nagariya",
   });
@@ -35,15 +36,35 @@ app.get("/about", (req, res) => {
 
 app.get("/help", (req, res) => {
   res.render("help", {
-    title: "Help Page",
+    title: "Help",
     name: "Nakul Nagariya",
   });
 });
 
 app.get("/weather", (req, res) => {
-  res.send({
-    forcast: "its snowing outside",
-    location: "bengaluru",
+  if (!req.query.address) {
+    return res.send({
+      error: "You must provide an address.",
+    });
+  }
+
+  geocode(req.query.address, (error, { location } = {}) => {
+    if (error) {
+      return res.send({
+        error,
+      });
+    }
+    forecast(req.query.address, (error, forecastData) => {
+      if (error) {
+        return res.send({
+          error,
+        });
+      }
+      return res.send({
+        forecast: forecastData,
+        location,
+      });
+    });
   });
 });
 
